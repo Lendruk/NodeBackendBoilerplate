@@ -5,7 +5,7 @@ import { TYPES } from "../Types";
 
 class ServiceModule {
   private module: ContainerModule;
-  
+
   constructor() {
     this.module = new ContainerModule((bind: interfaces.Bind) => {
       bind<Service>(TYPES.Service).toConstantValue(new AuthService()).whenTargetNamed("AuthService");
@@ -17,9 +17,7 @@ class ServiceModule {
   }
 
   async start(container: Container): Promise<void> {
-   await Promise.race(
-     container.getAll<Service>(TYPES.Service).map(service => service.start())
-   );
+    await Promise.race(container.getAll<Service>(TYPES.Service).map((service) => service.start()));
   }
 }
 

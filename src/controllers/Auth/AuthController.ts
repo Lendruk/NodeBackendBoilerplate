@@ -8,30 +8,32 @@ import { Get, Post } from "../../types/ControllerRoute";
 
 @injectable()
 export default class AuthController implements Controller {
-  private static readonly API_PATH = '/auth';
+  private static readonly API_PATH = "/auth";
 
   public constructor(@inject(TYPES.Service) @named("AuthService") private authService: AuthService) {}
 
-  public start(): void {
-   
-  } 
+  public start(): void {}
 
   @Post("/register")
   public async register(req: Request, res: Response): Promise<void> {
-    const { body: { username, email, password }} = req;
+    const {
+      body: { username, email, password },
+    } = req;
 
-    if(!username) throw new Exception(Errors.MISSING_PARAMS('username'));
-    if(!email) throw new Exception(Errors.MISSING_PARAMS('email'));
-    if(!password) throw new Exception(Errors.MISSING_PARAMS('password'));
+    if (!username) throw new Exception(Errors.MISSING_PARAMS("username"));
+    if (!email) throw new Exception(Errors.MISSING_PARAMS("email"));
+    if (!password) throw new Exception(Errors.MISSING_PARAMS("password"));
 
     await this.authService.registerUser({ username, email, password });
 
-    res.status(200).json({ });
+    res.status(200).json({});
   }
 
   @Post("/login")
   public async login(req: Request, res: Response): Promise<void> {
-    const { body: { email, password } } = req;
+    const {
+      body: { email, password },
+    } = req;
 
     const token = await this.authService.loginUser({ email, password });
 

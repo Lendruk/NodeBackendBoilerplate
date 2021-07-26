@@ -5,7 +5,7 @@ import AuthController from "../../controllers/Auth/AuthController";
 
 class ControllerModule {
   private module: ContainerModule;
-  
+
   constructor() {
     this.module = new ContainerModule((bind: interfaces.Bind) => {
       bind<Controller>(TYPES.Controller).to(AuthController).inSingletonScope().whenTargetNamed("AuthController");
@@ -17,9 +17,7 @@ class ControllerModule {
   }
 
   async start(container: Container): Promise<void> {
-   await Promise.race([
-    container.getAll<Controller>(TYPES.Controller).map(service => service.start())
-   ]);
+    await Promise.race([container.getAll<Controller>(TYPES.Controller).map((service) => service.start())]);
   }
 }
 

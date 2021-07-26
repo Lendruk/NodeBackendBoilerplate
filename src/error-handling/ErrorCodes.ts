@@ -1,7 +1,7 @@
 export class Exception extends Error {
   httpCode: number;
 
-  constructor(params: { httpCode: number, message: string }) {
+  constructor(params: { httpCode: number; message: string }) {
     const { httpCode, message } = params;
     super(message);
     this.message = message;
@@ -10,9 +10,9 @@ export class Exception extends Error {
 }
 
 export class ServerException extends Exception {
-  constructor(params: { httpCode: number, message: string }) {
+  constructor(params: { httpCode: number; message: string }) {
     super(params);
-    Logger.error(this.message);    
+    Logger.error(this.message);
   }
 }
 
@@ -24,15 +24,15 @@ export const Errors = {
     },
     INVALID_CREDS: {
       httpCode: 400,
-      message: "Email or password provided are wrong"
-    }
+      message: "Email or password provided are wrong",
+    },
   },
   NOT_FOUND: {
     httpCode: 404,
     message: "Resource not found",
   },
-  MISSING_PARAMS: (param) => ({
+  MISSING_PARAMS: (param: string): { httpCode: number; message: string } => ({
     httpCode: 400,
-    message: `Missing parameter ${param}`
+    message: `Missing parameter ${param}`,
   }),
 };
